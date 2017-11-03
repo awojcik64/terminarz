@@ -2,10 +2,19 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QDate>
-#include <QTime>
 #include <cstring>
-
+#include <vector>
+/*#include <QDate>
+#include <QTime>
+#include <QCalendarWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QTimeEdit>*/
+#include <QtCore>
+#include <iostream>
+#include <QDialog>
+#include <unistd.h>
+#include <fstream>
 namespace Ui {
 class MainWindow;
 }
@@ -23,3 +32,8 @@ private:
 };
 
 #endif // MAINWINDOW_H
+/***********************************************************
+ * Projekt prowadzony w ramach zajęć projektowych          *
+ * Programowanie w Języku C(++), Politechnika Świętokrzyska*
+ * Autorzy: Aleksander Wojcik i Wiktor Wojcik, grupa 2ID15A*
+ * *********************************************************/

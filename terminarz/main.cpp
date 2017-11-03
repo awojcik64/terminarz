@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-
 struct event_log
 {
     QDate term_data;
@@ -8,12 +7,27 @@ struct event_log
     std::string description;
 };
 
+class eventmgr
+{
+public:
+    eventmgr()
+    {
+        QDialog startup_error;
+        startup_error.show();
+        sleep(5);
+        exit(-1);
+    }
+    eventmgr(MainWindow &w)
+    {
+
+        w.show();
+    }
+};
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    w.show();
-
-
+    eventmgr manager(w);
     return a.exec();
 }
