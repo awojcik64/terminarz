@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDate>
+#include <QTime>
+#include <cstring>
 
 namespace Ui {
 class MainWindow;
