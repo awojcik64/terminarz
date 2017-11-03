@@ -2,8 +2,8 @@
 #include <QApplication>
 struct event_log
 {
-    QDate term_data;
-    QTime term_time;
+    QDate date;
+    QTime time;
     std::string description;
 };
 
@@ -19,9 +19,9 @@ public:
     }
     eventmgr(MainWindow &w)
     {
-
         w.show();
     }
+
 };
 
 int main(int argc, char *argv[])
