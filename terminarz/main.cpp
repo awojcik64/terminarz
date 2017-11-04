@@ -1,15 +1,12 @@
 #include "mainwindow.h"
 #include <QApplication>
-struct event_log
-{
-    QDate date;
-    QTime time;
-    std::string description;
-};
 
 class eventmgr
 {
+protected:
+    QVector<event_log> storage;
 public:
+    event_log buffer;
     eventmgr()
     {
         QDialog startup_error;

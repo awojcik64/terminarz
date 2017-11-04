@@ -31,5 +31,4 @@ HEADERS += \
         mainwindow.h
 
 FORMS += \
-        mainwindow.ui \
-    startup_error.ui
+        mainwindow.ui

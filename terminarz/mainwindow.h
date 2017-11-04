@@ -3,12 +3,13 @@
 
 #include <QMainWindow>
 #include <cstring>
-#include <vector>
 #include <QtCore>
 #include <iostream>
 #include <QDialog>
 #include <unistd.h>
 #include <fstream>
+#include <QtGui>
+#include <QtWidgets>
 namespace Ui {
 class MainWindow;
 }
@@ -20,10 +21,24 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QString lineEdit_text();
+    QTime timeEdit_time();
+    QDate calendar_date();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
 };
+
+struct event_log
+{
+    QDate date;
+    QTime time;
+    QString description;
+};
+
 
 #endif // MAINWINDOW_H
 /***********************************************************
