@@ -6,6 +6,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //QStringListModel lista_zadan;
+    QAbstractTableModel model;
+    model.setHeaderData()
+
+
 }
 
 MainWindow::~MainWindow()
@@ -30,6 +36,7 @@ void MainWindow::on_pushButton_clicked()
     buffer.date=ui->calendarWidget->selectedDate();
     buffer.time=ui->timeEdit->time();
     buffer.description=ui->lineEdit->text();
+
 
 }
 

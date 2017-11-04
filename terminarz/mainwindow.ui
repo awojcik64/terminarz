@@ -26,16 +26,6 @@
     <property name="title">
      <string>Nowe zadanie</string>
     </property>
-    <widget class="QColumnView" name="columnView">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>130</y>
-       <width>711</width>
-       <height>271</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="lineEdit">
      <property name="geometry">
       <rect>
@@ -99,6 +89,16 @@
        <minute>0</minute>
        <second>0</second>
       </time>
+     </property>
+    </widget>
+    <widget class="QTableView" name="tableView">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>131</y>
+       <width>721</width>
+       <height>271</height>
+      </rect>
      </property>
     </widget>
    </widget>
