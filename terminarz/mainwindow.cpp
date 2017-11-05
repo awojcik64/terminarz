@@ -17,6 +17,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setHorizontalHeaderLabels(headers);
     ui->tableWidget->setColumnWidth(DESC,600);
 
+
+    /*QMessageBox warn;
+    warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
+    warn.exec();*/
 }
 
 MainWindow::~MainWindow()
@@ -40,19 +44,18 @@ QDate MainWindow::calendar_date()
 void MainWindow::updateTable(const QDate &date)
 {
     int rowsCount=0;
-    int counter=0;
 
     for(int i=0; i<storage.size(); i++)
     {
         if(storage[i].date == date)
         {
             ui->tableWidget->setRowCount(++rowsCount);
-            ui->tableWidget->setItem(i,GODZ,new QTableWidgetItem(storage[i].time.toString()));
-            ui->tableWidget->setItem(i,DESC,new QTableWidgetItem(storage[i].description));
-            counter++;
+            ui->tableWidget->setItem(rowsCount-1,GODZ,new QTableWidgetItem(storage[i].time.toString()));
+            ui->tableWidget->setItem(rowsCount-1,DESC,new QTableWidgetItem(storage[i].description));
+
         }
     }
-    if(counter == 0) ui->tableWidget->setRowCount(0);
+    if(rowsCount == 0) ui->tableWidget->setRowCount(0);
 }
 void MainWindow::on_pushButton_clicked()
 {
