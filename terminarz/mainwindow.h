@@ -1,3 +1,9 @@
+/***********************************************************
+ * Projekt prowadzony w ramach zajęć projektowych          *
+ * Programowanie w Języku C(++), Politechnika Świętokrzyska*
+ * Autorzy: Aleksander Wojcik i Wiktor Wojcik, grupa 2ID15A*
+ ***********************************************************/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -13,25 +19,6 @@
 namespace Ui {
 class MainWindow;
 }
-
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
-
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-    QString lineEdit_text();
-    QTime timeEdit_time();
-    QDate calendar_date();
-
-private slots:
-    void on_pushButton_clicked();
-
-private:
-    Ui::MainWindow *ui;
-};
-
 struct event_log
 {
     QDate date;
@@ -39,10 +26,29 @@ struct event_log
     QString description;
 };
 
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    QVector<event_log> storage;
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+    QString lineEdit_text();
+    QTime timeEdit_time();
+    QDate calendar_date();
+    bool addEvent(QDate date, QString description);
+
+private slots:
+    void on_pushButton_clicked();
+
+    void on_calendarWidget_clicked(const QDate &date);
+
+private:
+    Ui::MainWindow *ui;
+    void updateTable(const QDate &date);
+};
+
+
 
 #endif // MAINWINDOW_H
-/***********************************************************
- * Projekt prowadzony w ramach zajęć projektowych          *
- * Programowanie w Języku C(++), Politechnika Świętokrzyska*
- * Autorzy: Aleksander Wojcik i Wiktor Wojcik, grupa 2ID15A*
- ***********************************************************/
