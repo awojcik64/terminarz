@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1181</width>
-    <height>643</height>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>0</y>
       <width>731</width>
-      <height>411</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="title">
@@ -91,13 +91,13 @@
       </time>
      </property>
     </widget>
-    <widget class="QTableView" name="tableView">
+    <widget class="QTableWidget" name="tableWidget">
      <property name="geometry">
       <rect>
-       <x>5</x>
-       <y>131</y>
-       <width>721</width>
-       <height>271</height>
+       <x>10</x>
+       <y>130</y>
+       <width>711</width>
+       <height>301</height>
       </rect>
      </property>
     </widget>
@@ -108,7 +108,7 @@
       <x>750</x>
       <y>0</y>
       <width>421</width>
-      <height>411</height>
+      <height>431</height>
      </rect>
     </property>
     <property name="gridVisible">

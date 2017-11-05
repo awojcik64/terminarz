@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 
-class eventmgr
+/*class eventmgr
 {
 protected:
     QVector<event_log> storage;
@@ -16,15 +16,16 @@ public:
     }
     eventmgr(MainWindow &w)
     {
-        w.show();
+
     }
 
-};
+};*/
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    eventmgr manager(w);
+    w.show();
+    //eventmgr manager(w);
     return a.exec();
 }

@@ -1,16 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    //QStringListModel lista_zadan;
-    QAbstractTableModel model;
-    model.setHeaderData()
-
+    ui->tableWidget->setColumnCount(2);
+    ui->tableWidget->setRowCount(8);
+    QStringList headers;
+    headers<<"Godzina"<<"Tekst";
+    ui->tableWidget->setHorizontalHeaderLabels(headers);
+    ui->tableWidget->setColumnWidth(1,550);
 
 }
 
@@ -30,6 +31,16 @@ QDate MainWindow::calendar_date()
 {
     return ui->calendarWidget->selectedDate();
 }
+class zadania
+{
+protected:
+    QVector<event_log> storage;
+
+public:
+
+
+
+};
 void MainWindow::on_pushButton_clicked()
 {
     event_log buffer;
