@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setColumnWidth(DESC,600);
 
     readFile(archive);
-    if(ui->tableWidget->colorCount()>0) updateTable(ui->calendarWidget->selectedDate());
+    if(ui->tableWidget->colorCount()>0)
+        updateTable(ui->calendarWidget->selectedDate());
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
     warn.exec();*/
@@ -113,6 +114,8 @@ void MainWindow::updateTable(const QDate &date)
 {
     int rowsCount=0;
 
+    sort();
+
     for(int i=0; i<storage.size(); i++)
     {
         if(storage[i].date == date)
@@ -139,3 +142,32 @@ void MainWindow::on_calendarWidget_clicked(const QDate &date)
 {
     updateTable(date);
 }
+
+
+void MainWindow::swap(event_log &entity1, event_log &entity2)
+{
+    event_log tmp;
+    tmp=entity1;
+    entity1=entity2;
+    entity2=tmp;
+}
+bool MainWindow::sort()
+{
+    int i=0,j=0,k=0;
+    for(i=0; i<storage.size(); i++)
+    {
+        k=i;
+        for(j=i+1; j<storage.size(); j++)
+            if(storage[j].time<storage[k].time)
+            {
+                k=j;
+            }
+        swap(storage[k], storage[i]);
+    }
+    return 1;
+}
+
+
+
+
+

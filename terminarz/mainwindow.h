@@ -34,8 +34,6 @@ class MainWindow : public QMainWindow
 public:
     QVector<event_log> storage;
     QFile archive;
-    bool writeFile(QFile &archive);
-    bool readFile(QFile &archive);
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     QString lineEdit_text();
@@ -51,6 +49,10 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void updateTable(const QDate &date);
+    bool sort();
+    void swap(event_log &entity1, event_log &entity2);
+    bool writeFile(QFile &archive);
+    bool readFile(QFile &archive);
 };
 
 
