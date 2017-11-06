@@ -10,6 +10,9 @@
     <height>511</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::PreventContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Terminarz[WIP]</string>
   </property>
@@ -102,6 +105,9 @@
        <width>711</width>
        <height>291</height>
       </rect>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
      </property>
      <property name="columnCount">
       <number>2</number>

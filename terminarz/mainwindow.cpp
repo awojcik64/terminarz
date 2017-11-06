@@ -19,10 +19,12 @@ MainWindow::MainWindow(QWidget *parent) :
     readFile(archive);
     if(ui->tableWidget->colorCount()>0)
         updateTable(ui->calendarWidget->selectedDate());
+    connect(ui->tableWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(displayMenu(QPoint)));
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
     warn.exec();*/
 }
+
 QDataStream &operator>>(QDataStream &in, event_log &buffer)
 {
     in>>buffer.date>>buffer.time>>buffer.description;
@@ -166,8 +168,4 @@ bool MainWindow::sort()
     }
     return 1;
 }
-
-
-
-
 

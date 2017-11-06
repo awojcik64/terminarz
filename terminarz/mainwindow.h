@@ -40,6 +40,7 @@ public:
     QTime timeEdit_time();
     QDate calendar_date();
     bool addEvent(QDate date, QString description);
+    void displayMenu(QPoint &pos);
 
 private slots:
     void on_pushButton_clicked();
