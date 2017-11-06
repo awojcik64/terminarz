@@ -16,6 +16,7 @@
 #include <fstream>
 #include <QtGui>
 #include <QtWidgets>
+#include <fstream>
 namespace Ui {
 class MainWindow;
 }
@@ -32,6 +33,7 @@ class MainWindow : public QMainWindow
 
 public:
     QVector<event_log> storage;
+    fstream archive;
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     QString lineEdit_text();
