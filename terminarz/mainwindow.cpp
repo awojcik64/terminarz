@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setColumnWidth(DESC,600);
 
     readFile(archive);
-    if(ui->tableWidget->colorCount()>0)
+    if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
