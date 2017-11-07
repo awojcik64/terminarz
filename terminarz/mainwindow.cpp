@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->verticalHeader()->setVisible(false);
     QStringList headers;
-    headers<<"Godzina"<<"Tekst";
+    headers<<"Godzina"<<"Opis zadania";
     ui->tableWidget->setHorizontalHeaderLabels(headers);
     ui->tableWidget->setColumnWidth(DESC,600);
 
