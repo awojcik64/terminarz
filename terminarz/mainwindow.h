@@ -53,6 +53,8 @@ private slots:
 
     void on_actionWyjd_triggered();
 
+    void on_actionO_programie_triggered();
+
 private:
     Ui::MainWindow *ui;
     void updateTable(const QDate &date);

@@ -228,3 +228,11 @@ void MainWindow::on_actionWyjd_triggered()
 {
     exit(0);
 }
+
+void MainWindow::on_actionO_programie_triggered()
+{
+    QMessageBox info;
+    info.setText("O programie");
+    info.setInformativeText("Niniejszy program powstał na potrzeby\nprojektu na zaliczenie w Politechnice Świętokrzyskiej\nAutorzy:\nAleksander Wójcik\nWiktor Wójcik");
+    info.exec();
+}
