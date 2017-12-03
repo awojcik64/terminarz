@@ -15,10 +15,13 @@ MainWindow::MainWindow(QWidget *parent) :
     headers<<"Godzina"<<"Opis zadania";
     ui->tableWidget->setHorizontalHeaderLabels(headers);
     ui->tableWidget->setColumnWidth(DESC,600);
-
     readFile(archive);
     if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
+    ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    /*tableContext=new QMenu(ui->tableWidget);
+    tableContext->addAction("Edytuj");
+    tableContext->addAction("Usuń");*/
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
     warn.exec();*/
@@ -64,7 +67,7 @@ bool MainWindow::readFile(QFile &archive)
     {
         QMessageBox warn;
         warn.setText("Odnotowano pierwsze uruchomienie.");
-        warn.setInformativeText("Zostanie utworzony plik do przechowania danych.");
+        warn.setInformativeText("Zostanie utworzony plik do przechowania danych w chwili dodania pierwszego wpisu.");
         warn.exec();
         return 1;
     }
@@ -130,13 +133,7 @@ void MainWindow::updateTable(const QDate &date)
 }
 void MainWindow::on_pushButton_clicked()
 {
-    event_log buffer;
-    buffer.date=ui->calendarWidget->selectedDate();
-    buffer.time=ui->timeEdit->time();
-    buffer.description=ui->lineEdit->text();
-    storage.push_back(buffer);
-    updateTable(ui->calendarWidget->selectedDate());
-    writeFile(archive);
+    addEvent();
 }
 void MainWindow::on_calendarWidget_clicked(const QDate &date)
 {
@@ -167,7 +164,67 @@ bool MainWindow::sort()
     return 1;
 }
 
+void MainWindow::addEvent()
+{
+    event_log buffer;
+    buffer.date=ui->calendarWidget->selectedDate();
+    buffer.time=ui->timeEdit->time();
+    buffer.description=ui->lineEdit->text();
+    storage.push_back(buffer);
+    updateTable(ui->calendarWidget->selectedDate());
+    writeFile(archive);
+}
+void MainWindow::on_lineEdit_returnPressed()
+{
+    addEvent();
+}
+void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
+{
+    //tableContext->exec(QCursor::pos());
+    QMessageBox::StandardButton result = QMessageBox::question(this, "Usuwanie wpisu","Na pewno usunąć wybrany wpis?", QMessageBox::Yes | QMessageBox::No);
+    if(result==QMessageBox::Yes)
+    {
+        QList<QTableWidgetItem *> to_remove = ui->tableWidget->selectedItems();
+        QList<QTableWidgetItem *>::iterator i;
+        for(i = to_remove.begin(); i!= to_remove.end(); i++)
+        {
+            qDebug()<<(*i)->row()<<endl;
+            //storage.erase(storage.begin()+(*i)->row());
+            int target_row=(*i)->row();
+            int counter=0;
+            for(int iter=0; iter<storage.size(); iter++)
+            {
 
+                if(storage[iter].date==ui->calendarWidget->selectedDate())
+                {
+                    if(counter == target_row)
+                    {
+                        storage.erase(storage.begin()+iter);
+                        break;
+                    }
+                    counter++;
+                }
 
+            }
+            updateTable(ui->calendarWidget->selectedDate());
+            writeFile(archive);
+        }
+    }
 
-
+}
+void MainWindow::on_actionWyczy_dane_triggered()
+{
+    QMessageBox::StandardButton result = QMessageBox::question(this,"Usuwanie danych","Usunąć wszystkie dane? Tej operacji nie można cofnąć!", QMessageBox::Yes | QMessageBox::No);
+    if(result==QMessageBox::Yes) {
+        QFile file("archive.txt");
+        file.remove();
+        file.open(QIODevice::Text | QIODevice::WriteOnly);
+        file.close();
+        storage.clear();
+        updateTable(QDate::currentDate());
+    }
+}
+void MainWindow::on_actionWyjd_triggered()
+{
+    exit(0);
+}

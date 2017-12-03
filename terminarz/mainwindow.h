@@ -30,7 +30,7 @@ struct event_log
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+    //QMenu* tableContext;
 public:
     QVector<event_log> storage;
     QFile archive;
@@ -39,12 +39,19 @@ public:
     QString lineEdit_text();
     QTime timeEdit_time();
     QDate calendar_date();
-    bool addEvent(QDate date, QString description);
 
 private slots:
     void on_pushButton_clicked();
 
     void on_calendarWidget_clicked(const QDate &date);
+
+    void on_lineEdit_returnPressed();
+
+    void on_tableWidget_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionWyczy_dane_triggered();
+
+    void on_actionWyjd_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -53,6 +60,8 @@ private:
     void swap(event_log &entity1, event_log &entity2);
     bool writeFile(QFile &archive);
     bool readFile(QFile &archive);
+    void addEvent();
+    void deleteEvent(int row);
 };
 
 
