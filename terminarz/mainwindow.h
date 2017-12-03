@@ -17,6 +17,7 @@
 #include <QtGui>
 #include <QtWidgets>
 #include <QFile>
+#include <startuplistevents.h>
 namespace Ui {
 class MainWindow;
 }

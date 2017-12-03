@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <fstream>
+
 enum header_names {GODZ,DESC};
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,9 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    /*tableContext=new QMenu(ui->tableWidget);
-    tableContext->addAction("Edytuj");
-    tableContext->addAction("Usuń");*/
+
+
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
     warn.exec();*/

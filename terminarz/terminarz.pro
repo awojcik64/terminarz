@@ -25,11 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    startuplistevents.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    startuplistevents.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    startuplistevents.ui
 CONFIG += c++11
