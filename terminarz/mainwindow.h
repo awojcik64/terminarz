@@ -18,11 +18,14 @@
 #include <QtWidgets>
 #include <QFile>
 #include <startuplistevents.h>
+#include <login_form.h>
+
 namespace Ui {
 class MainWindow;
 }
 struct event_log
 {
+    QString username;
     QDate date;
     QTime time;
     QString description;
@@ -31,7 +34,6 @@ struct event_log
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    //QMenu* tableContext;
 public:
     QVector<event_log> storage;
     QFile archive;
@@ -40,6 +42,7 @@ public:
     QString lineEdit_text();
     QTime timeEdit_time();
     QDate calendar_date();
+    login_form logowanie;
 
 private slots:
     void on_pushButton_clicked();
@@ -66,7 +69,6 @@ private:
     void addEvent();
     void deleteEvent(int row);
 };
-
 
 
 #endif // MAINWINDOW_H

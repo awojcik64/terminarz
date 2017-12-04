@@ -1,11 +1,16 @@
 #ifndef STARTUPLISTEVENTS_H
 #define STARTUPLISTEVENTS_H
 
+#include <QMainWindow>
+#include <cstring>
+#include <QtCore>
+#include <iostream>
 #include <QDialog>
+#include <unistd.h>
+#include <fstream>
+#include <QtGui>
+#include <QtWidgets>
 #include <QFile>
-#include <QDate>
-#include <QTime>
-#include <QString>
 namespace Ui {
 class startupListEvents;
 }

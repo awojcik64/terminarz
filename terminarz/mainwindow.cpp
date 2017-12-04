@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
         updateTable(ui->calendarWidget->selectedDate());
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
+    logowanie.exec();
 
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
@@ -28,12 +29,12 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 QDataStream &operator>>(QDataStream &in, event_log &buffer)
 {
-    in>>buffer.date>>buffer.time>>buffer.description;
+    in>>buffer.username>>buffer.date>>buffer.time>>buffer.description;
     return in;
 }
 QDataStream &operator<<(QDataStream &in, event_log &buffer)
 {
-    in<<buffer.date<<buffer.time<<buffer.description;
+    in<<buffer.username<<buffer.date<<buffer.time<<buffer.description;
     return in;
 }
 bool MainWindow::writeFile(QFile &archive)
@@ -121,7 +122,7 @@ void MainWindow::updateTable(const QDate &date)
 
     for(int i=0; i<storage.size(); i++)
     {
-        if(storage[i].date == date)
+        if((storage[i].date == date) && (storage[i].username==logowanie.session_data))
         {
             ui->tableWidget->setRowCount(++rowsCount);
             ui->tableWidget->setItem(rowsCount-1,GODZ,new QTableWidgetItem(storage[i].time.toString()));
@@ -167,6 +168,7 @@ bool MainWindow::sort()
 void MainWindow::addEvent()
 {
     event_log buffer;
+    buffer.username=logowanie.session_data;
     buffer.date=ui->calendarWidget->selectedDate();
     buffer.time=ui->timeEdit->time();
     buffer.description=ui->lineEdit->text();
@@ -180,7 +182,7 @@ void MainWindow::on_lineEdit_returnPressed()
 }
 void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
 {
-    //tableContext->exec(QCursor::pos());
+    qDebug()<<"Pressed at: "<<pos.x()<<", "<<pos.y()<<endl;
     QMessageBox::StandardButton result = QMessageBox::question(this, "Usuwanie wpisu","Na pewno usunąć wybrany wpis?", QMessageBox::Yes | QMessageBox::No);
     if(result==QMessageBox::Yes)
     {
@@ -195,7 +197,7 @@ void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
             for(int iter=0; iter<storage.size(); iter++)
             {
 
-                if(storage[iter].date==ui->calendarWidget->selectedDate())
+                if((storage[iter].date==ui->calendarWidget->selectedDate()) && storage[iter].username == logowanie.session_data)
                 {
                     if(counter == target_row)
                     {
