@@ -6,6 +6,7 @@ login_form::login_form(QWidget *parent) :
     ui(new Ui::login_form)
 {
     ui->setupUi(this);
+    setWindowTitle("Logowanie do terminarza");
     odczyt_uzytkownikow(user_file);
     qDebug()<<"[loginform] Wczytano uzytkownikow"<<endl;
 }

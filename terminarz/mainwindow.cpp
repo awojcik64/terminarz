@@ -21,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-
+    startupListEvents logon_message;
+    logon_message.exec();
 
 
     /*QMessageBox warn;
@@ -67,10 +68,10 @@ bool MainWindow::readFile(QFile &archive)
     archive.setFileName("archive.txt");
     if(archive.exists() == false)
     {
-        QMessageBox warn;
+        /*QMessageBox warn;
         warn.setText("Odnotowano pierwsze uruchomienie.");
         warn.setInformativeText("Zostanie utworzony plik do przechowania danych w chwili dodania pierwszego wpisu.");
-        warn.exec();
+        warn.exec();*/
         return 1;
     }
     else{
