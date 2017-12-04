@@ -17,11 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setHorizontalHeaderLabels(headers);
     ui->tableWidget->setColumnWidth(DESC,600);
     readFile(archive);
+    logowanie.exec();
     if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    logowanie.exec();
+
 
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
@@ -119,7 +120,7 @@ void MainWindow::updateTable(const QDate &date)
     int rowsCount=0;
 
     sort();
-
+    qDebug()<<"[mainwindow] Do porownania: "<<logowanie.session_data<<endl;
     for(int i=0; i<storage.size(); i++)
     {
         if((storage[i].date == date) && (storage[i].username==logowanie.session_data))
@@ -169,6 +170,7 @@ void MainWindow::addEvent()
 {
     event_log buffer;
     buffer.username=logowanie.session_data;
+    qDebug()<<"[mainwindow] Wpisano do buffera: "<<buffer.username<<endl;
     buffer.date=ui->calendarWidget->selectedDate();
     buffer.time=ui->timeEdit->time();
     buffer.description=ui->lineEdit->text();
@@ -196,9 +198,10 @@ void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
             int counter=0;
             for(int iter=0; iter<storage.size(); iter++)
             {
-
+                qDebug()<<"[mainwindow] Do porownania: "<<logowanie.session_data<<endl;
                 if((storage[iter].date==ui->calendarWidget->selectedDate()) && storage[iter].username == logowanie.session_data)
                 {
+
                     if(counter == target_row)
                     {
                         storage.erase(storage.begin()+iter);

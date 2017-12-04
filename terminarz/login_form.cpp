@@ -7,6 +7,7 @@ login_form::login_form(QWidget *parent) :
 {
     ui->setupUi(this);
     odczyt_uzytkownikow(user_file);
+    qDebug()<<"[loginform] Wczytano uzytkownikow"<<endl;
 }
 
 login_form::~login_form()
@@ -35,6 +36,7 @@ QString login_form::zaloguj()
             if(haslo == users[i].password)
             {
                 session_data=login;
+                qDebug()<<"[login_form] Wpisano: "<<login<<" - wartosc session_data = "<<session_data<<endl;
                 return login;
             }
             else
@@ -146,6 +148,11 @@ void login_form::on_addUser_clicked()
     {
         users.push_back(buffer);
         writeFile(user_file);
+        QMessageBox info_success;
+        info_success.setText("Rejestracja");
+        info_success.setInformativeText("Zarejestrowano poprawnie.");
+        info_success.setIcon(QMessageBox::Information);
+        info_success.exec();
     }
 }
 
