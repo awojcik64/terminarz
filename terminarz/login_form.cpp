@@ -8,7 +8,7 @@ login_form::login_form(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("Logowanie do terminarza");
     odczyt_uzytkownikow(user_file);
-    qDebug()<<"[loginform] Wczytano uzytkownikow"<<endl;
+    qDebug()<<"[login_form] Wczytano uzytkownikow"<<endl;
 }
 
 login_form::~login_form()
@@ -43,7 +43,9 @@ QString login_form::zaloguj()
             else
             {
                 QMessageBox wrongpass;
-                wrongpass.setText("Nieprawidłowe hasło!");
+                wrongpass.setText("Błąd logowania");
+                wrongpass.setInformativeText("Nieprawidłowe hasło.");
+                wrongpass.setIcon(QMessageBox::Critical);
                 wrongpass.exec();
                 break;
             }
@@ -51,7 +53,9 @@ QString login_form::zaloguj()
     }
     if(czy_istnieje_user == false) {
         QMessageBox bad_user;
-        bad_user.setText("Nieprawidłowy login!");
+        bad_user.setText("Błąd logowania");
+        bad_user.setInformativeText("Użytkownik o takiej nazwie nie istnieje!");
+        bad_user.setIcon(QMessageBox::Critical);
         bad_user.exec();
     }
     exit(0);
@@ -142,6 +146,7 @@ void login_form::on_addUser_clicked()
             add_error.setText("Błąd rejestracji");
             add_error.setInformativeText("Użytkownik o takiej nazwie już istnieje!");
             add_error.setIcon(QMessageBox::Critical);
+            add_error.exec();
             exit(0);
         }
     }
