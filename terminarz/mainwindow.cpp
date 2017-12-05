@@ -2,20 +2,20 @@
 #include "ui_mainwindow.h"
 #include <fstream>
 
-enum header_names {GODZ,DESC};
+enum header_names {GODZ,DESC,STATE};
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    ui->tableWidget->setColumnCount(2);
+    ui->tableWidget->setColumnCount(3);
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->verticalHeader()->setVisible(false);
     QStringList headers;
-    headers<<"Godzina"<<"Opis zadania";
+    headers<<"Godzina"<<"Opis zadania"<<"Stan";
     ui->tableWidget->setHorizontalHeaderLabels(headers);
-    ui->tableWidget->setColumnWidth(DESC,600);
+    ui->tableWidget->setColumnWidth(DESC,450);
     readFile(archive);
     logowanie.exec();
     if(storage.size()>0)
@@ -31,12 +31,12 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 QDataStream &operator>>(QDataStream &in, event_log &buffer)
 {
-    in>>buffer.username>>buffer.date>>buffer.time>>buffer.description;
+    in>>buffer.username>>buffer.date>>buffer.time>>buffer.description>>buffer.stan;
     return in;
 }
 QDataStream &operator<<(QDataStream &in, event_log &buffer)
 {
-    in<<buffer.username<<buffer.date<<buffer.time<<buffer.description;
+    in<<buffer.username<<buffer.date<<buffer.time<<buffer.description<<buffer.stan;
     return in;
 }
 bool MainWindow::writeFile(QFile &archive)
@@ -129,6 +129,7 @@ void MainWindow::updateTable(const QDate &date)
             ui->tableWidget->setRowCount(++rowsCount);
             ui->tableWidget->setItem(rowsCount-1,GODZ,new QTableWidgetItem(storage[i].time.toString()));
             ui->tableWidget->setItem(rowsCount-1,DESC,new QTableWidgetItem(storage[i].description));
+            ui->tableWidget->setItem(rowsCount-1,STATE, new QTableWidgetItem(storage[i].stan));
 
         }
     }
@@ -175,6 +176,7 @@ void MainWindow::addEvent()
     buffer.date=ui->calendarWidget->selectedDate();
     buffer.time=ui->timeEdit->time();
     buffer.description=ui->lineEdit->text();
+    buffer.stan="Nie wykonano!";
     storage.push_back(buffer);
     updateTable(ui->calendarWidget->selectedDate());
     writeFile(archive);
@@ -240,5 +242,47 @@ void MainWindow::on_actionO_programie_triggered()
     QMessageBox info;
     info.setText("O programie");
     info.setInformativeText("Niniejszy program powstał na potrzeby\nprojektu na zaliczenie w Politechnice Świętokrzyskiej\nAutorzy:\nAleksander Wójcik\nWiktor Wójcik");
+    info.setIcon(QMessageBox::Information);
     info.exec();
+}
+
+void MainWindow::on_tableWidget_clicked(const QModelIndex &index)
+{
+    QMessageBox::StandardButton result = QMessageBox::question(this, "Zmiana statusu!","Na pewno zmianić status wpisu?", QMessageBox::Yes | QMessageBox::No);
+    if(result==QMessageBox::Yes)
+    {
+        QList<QTableWidgetItem *> to_change = ui->tableWidget->selectedItems();
+        QList<QTableWidgetItem *>::iterator i;
+        for(i = to_change.begin(); i!= to_change.end(); i++)
+        {
+            qDebug()<<(*i)->row()<<endl;
+            int target_row=(*i)->row();
+            int counter=0;
+            for(int iter=0; iter<storage.size(); iter++)
+            {
+
+                if(storage[iter].date==ui->calendarWidget->selectedDate())
+                {
+                    if(counter == target_row)
+                    {
+                        if(storage[iter].date==ui->calendarWidget->selectedDate())
+                                {
+                                    if(storage[iter].stan == "Wykonano!")
+                                        storage[iter].stan = "Nie wykonano!";
+                                    else
+                                        if(storage[iter].stan == "Nie wykonano!")
+                                            storage[iter].stan = "Wykonano!";
+                                break;
+
+                                }
+                    }
+                    counter++;
+
+                }
+
+            }
+            updateTable(ui->calendarWidget->selectedDate());
+            writeFile(archive);
+        }
+    }
 }

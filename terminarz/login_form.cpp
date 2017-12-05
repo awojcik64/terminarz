@@ -9,6 +9,7 @@ login_form::login_form(QWidget *parent) :
     setWindowTitle("Logowanie do terminarza");
     odczyt_uzytkownikow(user_file);
     qDebug()<<"[login_form] Wczytano uzytkownikow"<<endl;
+    ui->EditPassword->setEchoMode(QLineEdit::Password);
 }
 
 login_form::~login_form()

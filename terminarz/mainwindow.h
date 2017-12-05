@@ -29,6 +29,7 @@ struct event_log
     QDate date;
     QTime time;
     QString description;
+    QString stan;
 };
 
 class MainWindow : public QMainWindow
@@ -59,6 +60,8 @@ private slots:
 
     void on_actionO_programie_triggered();
     void updateTable(const QDate &date);
+
+    void on_tableWidget_clicked(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;

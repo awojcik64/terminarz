@@ -20,6 +20,7 @@ struct event_log_struct
     QDate date;
     QTime time;
     QString description;
+    QString stan;
 };
 
 class startupListEvents : public QDialog
