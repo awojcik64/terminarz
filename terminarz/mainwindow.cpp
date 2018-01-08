@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <fstream>
-
+#include <edit_event.h>
 enum header_names {GODZ,DESC,STATE};
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setColumnWidth(GODZ, 60);
     ui->tableWidget->setColumnWidth(DESC,450);
     ui->tableWidget->setColumnWidth(STATE, 110);
+    ui->timeEdit->setTime(QTime::currentTime());
     readFile(archive);
     logowanie.exec();
     if(storage.size()>0)
@@ -187,32 +188,78 @@ void MainWindow::on_lineEdit_returnPressed()
 {
     addEvent();
 }
-void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
+void testowy()
 {
-    qDebug()<<"Pressed at: "<<pos.x()<<", "<<pos.y()<<endl;
+    QMessageBox test;
+    test.setText("REEEE");
+    test.exec();
+}
+void MainWindow::deleteEvent()
+{
     QMessageBox::StandardButton result = QMessageBox::question(this, "Usuwanie wpisu","Na pewno usunąć wybrany wpis?", QMessageBox::Yes | QMessageBox::No);
+        if(result==QMessageBox::Yes)
+        {
+            QList<QTableWidgetItem *> to_remove = ui->tableWidget->selectedItems();
+            QList<QTableWidgetItem *>::iterator i;
+            for(i = to_remove.begin(); i!= to_remove.end(); i++)
+            {
+                qDebug()<<(*i)->row()<<endl;
+                //storage.erase(storage.begin()+(*i)->row());
+                int target_row=(*i)->row();
+                int counter=0;
+                for(int iter=0; iter<storage.size(); iter++)
+                {
+                    qDebug()<<"[mainwindow] Do porownania: "<<logowanie.session_data<<endl;
+                    if((storage[iter].date==ui->calendarWidget->selectedDate()) && storage[iter].username == logowanie.session_data)
+                    {
+
+                        if(counter == target_row)
+                        {
+                            storage.erase(storage.begin()+iter);
+                            break;
+                        }
+                        counter++;
+                    }
+
+                }
+                updateTable(ui->calendarWidget->selectedDate());
+                writeFile(archive);
+            }
+        }
+}
+
+void MainWindow::setStatus()
+{
+    QMessageBox::StandardButton result =QMessageBox::Yes; //QMessageBox::question(this, "Zmiana statusu!","Na pewno zmianić status wpisu?", QMessageBox::Yes | QMessageBox::No);
     if(result==QMessageBox::Yes)
     {
-        QList<QTableWidgetItem *> to_remove = ui->tableWidget->selectedItems();
+        QList<QTableWidgetItem *> to_change = ui->tableWidget->selectedItems();
         QList<QTableWidgetItem *>::iterator i;
-        for(i = to_remove.begin(); i!= to_remove.end(); i++)
+        for(i = to_change.begin(); i!= to_change.end(); i++)
         {
             qDebug()<<(*i)->row()<<endl;
-            //storage.erase(storage.begin()+(*i)->row());
             int target_row=(*i)->row();
             int counter=0;
             for(int iter=0; iter<storage.size(); iter++)
             {
-                qDebug()<<"[mainwindow] Do porownania: "<<logowanie.session_data<<endl;
-                if((storage[iter].date==ui->calendarWidget->selectedDate()) && storage[iter].username == logowanie.session_data)
-                {
 
+                if(storage[iter].date==ui->calendarWidget->selectedDate() && storage[iter].username == logowanie.session_data)
+                {
                     if(counter == target_row)
                     {
-                        storage.erase(storage.begin()+iter);
-                        break;
+                        if(storage[iter].date==ui->calendarWidget->selectedDate())
+                                {
+                                    if(storage[iter].stan == "Wykonano!")
+                                        storage[iter].stan = "Nie wykonano!";
+                                    else
+                                        if(storage[iter].stan == "Nie wykonano!")
+                                            storage[iter].stan = "Wykonano!";
+                                break;
+
+                                }
                     }
                     counter++;
+
                 }
 
             }
@@ -220,6 +267,63 @@ void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
             writeFile(archive);
         }
     }
+}
+
+void MainWindow::editEvent()
+{
+    QList<QTableWidgetItem *> to_change = ui->tableWidget->selectedItems();
+    QList<QTableWidgetItem *>::iterator i;
+    for(i = to_change.begin(); i!= to_change.end(); i++)
+    {
+        qDebug()<<(*i)->row()<<endl;
+        int target_row=(*i)->row();
+        int counter=0;
+        int iter;
+        for(iter=0; iter<storage.size(); iter++)
+        {
+
+            if(storage[iter].date==ui->calendarWidget->selectedDate() && storage[iter].username == logowanie.session_data)
+            {
+                if(counter == target_row)
+                {
+                    if(storage[iter].date==ui->calendarWidget->selectedDate())
+                    {
+                        break;
+                    }
+                }
+                counter++;
+
+            }
+
+        }
+        edit_event editor;
+        editor.setOriginalDate(storage[iter].date);
+        editor.setOriginalTime(storage[iter].time);
+        editor.setOriginalDescription(storage[iter].description);
+        editor.exec();
+        storage[iter].date=editor.getDate();
+        storage[iter].time=editor.getTime();
+        storage[iter].description=editor.getDescription();
+        updateTable(ui->calendarWidget->selectedDate());
+        writeFile(archive);
+    }
+}
+
+void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu *table_menu = new QMenu(this);
+    QAction* set_status = new QAction("Zmień status");
+    connect(set_status, SIGNAL(triggered()), this, SLOT(setStatus()));
+    table_menu->addAction(set_status);
+    table_menu->addSeparator();
+    QAction* action_edit = new QAction("Edytuj");
+    connect(action_edit, SIGNAL(triggered()), this, SLOT(editEvent()));
+    table_menu->addAction(action_edit);
+    QAction* delete_event = new QAction("Usuń");
+    connect(delete_event, SIGNAL(triggered()), this, SLOT(deleteEvent()));
+    table_menu->addAction(delete_event);
+    table_menu->exec(QCursor::pos());
+    qDebug()<<"Pressed at: "<<pos.x()<<", "<<pos.y()<<endl;
 
 }
 void MainWindow::on_actionWyczy_dane_triggered()
@@ -246,45 +350,4 @@ void MainWindow::on_actionO_programie_triggered()
     info.setInformativeText("Niniejszy program powstał na potrzeby\nprojektu na zaliczenie w Politechnice Świętokrzyskiej\nAutorzy:\nAleksander Wójcik\nWiktor Wójcik");
     info.setIcon(QMessageBox::Information);
     info.exec();
-}
-
-void MainWindow::on_tableWidget_clicked(const QModelIndex &index)
-{
-    QMessageBox::StandardButton result = QMessageBox::question(this, "Zmiana statusu!","Na pewno zmianić status wpisu?", QMessageBox::Yes | QMessageBox::No);
-    if(result==QMessageBox::Yes)
-    {
-        QList<QTableWidgetItem *> to_change = ui->tableWidget->selectedItems();
-        QList<QTableWidgetItem *>::iterator i;
-        for(i = to_change.begin(); i!= to_change.end(); i++)
-        {
-            qDebug()<<(*i)->row()<<endl;
-            int target_row=(*i)->row();
-            int counter=0;
-            for(int iter=0; iter<storage.size(); iter++)
-            {
-
-                if(storage[iter].date==ui->calendarWidget->selectedDate())
-                {
-                    if(counter == target_row)
-                    {
-                        if(storage[iter].date==ui->calendarWidget->selectedDate())
-                                {
-                                    if(storage[iter].stan == "Wykonano!")
-                                        storage[iter].stan = "Nie wykonano!";
-                                    else
-                                        if(storage[iter].stan == "Nie wykonano!")
-                                            storage[iter].stan = "Wykonano!";
-                                break;
-
-                                }
-                    }
-                    counter++;
-
-                }
-
-            }
-            updateTable(ui->calendarWidget->selectedDate());
-            writeFile(archive);
-        }
-    }
 }

@@ -27,16 +27,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     startuplistevents.cpp \
-    login_form.cpp
+    login_form.cpp \
+    edit_event.cpp
 
 HEADERS += \
         mainwindow.h \
     startuplistevents.h \
     login_form.h \
-    calendarwidget.h
+    edit_event.h
 
 FORMS += \
         mainwindow.ui \
     startuplistevents.ui \
-    login_form.ui
+    login_form.ui \
+    edit_event.ui
 CONFIG += c++11

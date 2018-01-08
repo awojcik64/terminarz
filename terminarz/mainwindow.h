@@ -59,9 +59,14 @@ private slots:
     void on_actionWyjd_triggered();
 
     void on_actionO_programie_triggered();
+
     void updateTable(const QDate &date);
 
-    void on_tableWidget_clicked(const QModelIndex &index);
+    void deleteEvent();
+
+    void setStatus();
+
+    void editEvent();
 
 private:
     Ui::MainWindow *ui;
@@ -70,7 +75,6 @@ private:
     bool writeFile(QFile &archive);
     bool readFile(QFile &archive);
     void addEvent();
-    void deleteEvent(int row);
 };
 
 
