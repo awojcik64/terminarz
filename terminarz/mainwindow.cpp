@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    startupListEvents logon_message;
+    startupListEvents logon_message(logowanie.session_data);
     logon_message.exec();
 
 

@@ -17,6 +17,7 @@ class startupListEvents;
 
 struct event_log_struct
 {
+    QString username;
     QDate date;
     QTime time;
     QString description;
@@ -28,9 +29,10 @@ class startupListEvents : public QDialog
     Q_OBJECT
 
 public:
-    explicit startupListEvents(QWidget *parent = 0);
+    explicit startupListEvents(QString session_username, QWidget *parent = 0);
     ~startupListEvents();
     bool readFile(QFile &archive);
+    QString session_data;
 
 private:
     Ui::startupListEvents *ui;
