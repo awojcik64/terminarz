@@ -16,7 +16,10 @@ startupListEvents::startupListEvents(QString session_username, QWidget *parent) 
     QStringList headers;
     headers<<"Data"<<"Godzina"<<"Opis zadania"<<"Stan";
     ui->tableWidget->setHorizontalHeaderLabels(headers);
+    ui->tableWidget->setColumnWidth(GODZ, 60);
     ui->tableWidget->setColumnWidth(DESC,300);
+    ui->tableWidget->setColumnWidth(DATE, 200);
+    ui->tableWidget->setColumnWidth(STAN, 110);
     readFile(archive);
     session_data=session_username;
     fetchTable(QDate::currentDate());
@@ -80,7 +83,7 @@ void startupListEvents::fetchTable(const QDate &date)
         {
             ui->tableWidget->setRowCount(++rowsCount);
             qDebug()<<"[startuplistevents] Wartość rowsCount"<<rowsCount<<endl;
-            ui->tableWidget->setItem(rowsCount-1,DATE,new QTableWidgetItem(storage[i].date.toString()));
+            ui->tableWidget->setItem(rowsCount-1,DATE,new QTableWidgetItem(storage[i].date.toString("dddd, d MMMM yyyy")));
             ui->tableWidget->setItem(rowsCount-1,GODZ,new QTableWidgetItem(storage[i].time.toString()));
             ui->tableWidget->setItem(rowsCount-1,DESC,new QTableWidgetItem(storage[i].description));
             ui->tableWidget->setItem(rowsCount-1,STAN,new QTableWidgetItem(storage[i].stan));
@@ -88,15 +91,16 @@ void startupListEvents::fetchTable(const QDate &date)
         }
     }
 
-    /*for(int i=0; i<storage.size(); i++)
+    for(int i=0; i<storage.size(); i++)
     {
         if(storage[i].date==date.addDays(1))
         {
             ui->tableWidget->setRowCount(++rowsCount);
-            ui->tableWidget->setItem(rowsCount-1,DATE,new QTableWidgetItem(storage[i].date.toString()));
+            ui->tableWidget->setItem(rowsCount-1,DATE,new QTableWidgetItem(storage[i].date.toString("dddd, d MMMM yyyy")));
             ui->tableWidget->setItem(rowsCount-1,GODZ,new QTableWidgetItem(storage[i].time.toString()));
             ui->tableWidget->setItem(rowsCount-1,DESC,new QTableWidgetItem(storage[i].description));
+            ui->tableWidget->setItem(rowsCount-1,STAN,new QTableWidgetItem(storage[i].stan));
         }
-    }*/
+    }
     if(rowsCount == 0) ui->tableWidget->setRowCount(0);
 }

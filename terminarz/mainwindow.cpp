@@ -15,7 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QStringList headers;
     headers<<"Godzina"<<"Opis zadania"<<"Stan";
     ui->tableWidget->setHorizontalHeaderLabels(headers);
+    ui->tableWidget->setColumnWidth(GODZ, 60);
     ui->tableWidget->setColumnWidth(DESC,450);
+    ui->tableWidget->setColumnWidth(STATE, 110);
     readFile(archive);
     logowanie.exec();
     if(storage.size()>0)

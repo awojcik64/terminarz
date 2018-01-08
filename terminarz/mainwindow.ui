@@ -174,22 +174,22 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionZapisz">
    <property name="text">
-    <string>Zapisz</string>
+    <string>&amp;Zapisz</string>
    </property>
   </action>
   <action name="actionWyczy_dane">
    <property name="text">
-    <string>Wyczyść dane</string>
+    <string>&amp;Wyczyść dane</string>
    </property>
   </action>
   <action name="actionWyjd">
    <property name="text">
-    <string>Wyjdź</string>
+    <string>W&amp;yjdź</string>
    </property>
   </action>
   <action name="actionO_programie">
    <property name="text">
-    <string>O programie</string>
+    <string>&amp;O programie</string>
    </property>
   </action>
  </widget>

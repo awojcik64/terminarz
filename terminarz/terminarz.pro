@@ -32,7 +32,8 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     startuplistevents.h \
-    login_form.h
+    login_form.h \
+    calendarwidget.h
 
 FORMS += \
         mainwindow.ui \
