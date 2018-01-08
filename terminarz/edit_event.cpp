@@ -47,3 +47,7 @@ QString edit_event::getDescription()
 {
     return description_new;
 }
+bool edit_event::good()
+{
+    return edit_success;
+}

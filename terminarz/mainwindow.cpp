@@ -301,11 +301,13 @@ void MainWindow::editEvent()
         editor.setOriginalTime(storage[iter].time);
         editor.setOriginalDescription(storage[iter].description);
         editor.exec();
-        storage[iter].date=editor.getDate();
-        storage[iter].time=editor.getTime();
-        storage[iter].description=editor.getDescription();
-        updateTable(ui->calendarWidget->selectedDate());
-        writeFile(archive);
+        if(editor.good()==true) {
+            storage[iter].date=editor.getDate();
+            storage[iter].time=editor.getTime();
+            storage[iter].description=editor.getDescription();
+            updateTable(ui->calendarWidget->selectedDate());
+            writeFile(archive);
+        }
     }
 }
 
@@ -336,6 +338,16 @@ void MainWindow::on_actionWyczy_dane_triggered()
         file.close();
         storage.clear();
         updateTable(QDate::currentDate());
+        QFile file2("Users.txt");
+        file2.remove();
+        file2.open(QIODevice::Text | QIODevice::WriteOnly);
+        file.close();
+        QMessageBox info;
+        info.setIcon(QMessageBox::Warning);
+        info.setText("Zamknięcie programu");
+        info.setInformativeText("W celu zatwierdzenia zmian, program zostanie zamknięty...");
+        info.exec();
+        exit(0);
     }
 }
 void MainWindow::on_actionWyjd_triggered()

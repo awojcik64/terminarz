@@ -25,6 +25,7 @@ public:
     QDate getDate();
     QTime getTime();
     QString getDescription();
+    bool good();
 
 private slots:
     void on_buttonBox_accepted();
