@@ -68,6 +68,10 @@ private slots:
 
     void editEvent();
 
+    void on_actionRosn_co_toggled(bool arg1);
+
+    void on_actionMalej_co_toggled(bool arg1);
+
 private:
     Ui::MainWindow *ui;
     bool sort();

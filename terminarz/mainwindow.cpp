@@ -26,7 +26,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     startupListEvents logon_message(logowanie.session_data);
     logon_message.exec();
+    statusBar()->showMessage("Dodatkowe opcje dotyczące istniejących wydarzeń dostępne są pod prawym przyciskiem myszy.");
 
+    QActionGroup* sortGroup = new QActionGroup(this);
+    sortGroup->addAction(ui->actionWed_ug_daty);
+    sortGroup->addAction(ui->actionWed_ug_opisu);
+    sortGroup->addAction(ui->actionWed_ug_statusu);
+    sortGroup->setExclusive(true);
+    ui->actionWed_ug_daty->setChecked(true);
+    QActionGroup* sortOrderGroup = new QActionGroup(this);
+    sortOrderGroup->addAction(ui->actionRosn_co);
+    sortOrderGroup->addAction(ui->actionMalej_co);
+    sortOrderGroup->setExclusive(true);
+    ui->actionRosn_co->setChecked(true);
 
     /*QMessageBox warn;
     warn.setText("Aplikacja Work in Progress; zglaszanie bledow mile widziane.");
@@ -314,19 +326,21 @@ void MainWindow::editEvent()
 void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
 {
     QMenu *table_menu = new QMenu(this);
-    QAction* set_status = new QAction("Zmień status");
+    QAction* set_status = new QAction("Zmień status", this);
+    set_status->setStatusTip("Zmień status wydarzenia.");
     connect(set_status, SIGNAL(triggered()), this, SLOT(setStatus()));
     table_menu->addAction(set_status);
     table_menu->addSeparator();
-    QAction* action_edit = new QAction("Edytuj");
+    QAction* action_edit = new QAction("Edytuj", this);
+    action_edit->setStatusTip("Edytuj datę, godzinę, opis wydarzenia.");
     connect(action_edit, SIGNAL(triggered()), this, SLOT(editEvent()));
     table_menu->addAction(action_edit);
-    QAction* delete_event = new QAction("Usuń");
+    QAction* delete_event = new QAction("Usuń", this);
+    delete_event->setStatusTip("Usuń wpis. Tej akcji nie można cofnąć.");
     connect(delete_event, SIGNAL(triggered()), this, SLOT(deleteEvent()));
     table_menu->addAction(delete_event);
     table_menu->exec(QCursor::pos());
     qDebug()<<"Pressed at: "<<pos.x()<<", "<<pos.y()<<endl;
-
 }
 void MainWindow::on_actionWyczy_dane_triggered()
 {
@@ -362,4 +376,16 @@ void MainWindow::on_actionO_programie_triggered()
     info.setInformativeText("Niniejszy program powstał na potrzeby\nprojektu na zaliczenie w Politechnice Świętokrzyskiej\nAutorzy:\nAleksander Wójcik\nWiktor Wójcik");
     info.setIcon(QMessageBox::Information);
     info.exec();
+}
+
+void MainWindow::on_actionRosn_co_toggled(bool arg1)
+{
+
+
+}
+
+void MainWindow::on_actionMalej_co_toggled(bool arg1)
+{
+
+
 }

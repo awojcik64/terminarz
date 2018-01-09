@@ -35,6 +35,9 @@
        <height>32</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zatwierdź przyciskiem ENTER, lub przyciskiem &amp;quot;Zapisz&amp;quot; obok pola tekstowego.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="inputMethodHints">
       <set>Qt::ImhNoAutoUppercase|Qt::ImhPreferLatin</set>
      </property>
@@ -103,6 +106,9 @@
        <height>291</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dodatkowe opcje dotyczące wpisów są pod prawym przyciskiem myszy.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -164,11 +170,23 @@
    </widget>
    <widget class="QMenu" name="menuPomoc">
     <property name="title">
-     <string>Pomoc</string>
+     <string>Pomo&amp;c</string>
     </property>
     <addaction name="actionO_programie"/>
    </widget>
+   <widget class="QMenu" name="menuWy_wietlanie">
+    <property name="title">
+     <string>Wyświet&amp;lanie</string>
+    </property>
+    <addaction name="actionWed_ug_daty"/>
+    <addaction name="actionWed_ug_opisu"/>
+    <addaction name="actionWed_ug_statusu"/>
+    <addaction name="separator"/>
+    <addaction name="actionRosn_co"/>
+    <addaction name="actionMalej_co"/>
+   </widget>
    <addaction name="menuTerminarz"/>
+   <addaction name="menuWy_wietlanie"/>
    <addaction name="menuPomoc"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -176,20 +194,78 @@
    <property name="text">
     <string>&amp;Zapisz</string>
    </property>
+   <property name="statusTip">
+    <string>Przestarzałe: Zapisz swoje dane. Obecnie robione automatycznie.</string>
+   </property>
   </action>
   <action name="actionWyczy_dane">
    <property name="text">
     <string>&amp;Wyczyść dane</string>
+   </property>
+   <property name="statusTip">
+    <string>Usuń BEZPOWROTNIE wszystkie dane. Program zostanie zamknięty.</string>
    </property>
   </action>
   <action name="actionWyjd">
    <property name="text">
     <string>W&amp;yjdź</string>
    </property>
+   <property name="statusTip">
+    <string>Wyjdź z programu.</string>
+   </property>
   </action>
   <action name="actionO_programie">
    <property name="text">
     <string>&amp;O programie</string>
+   </property>
+  </action>
+  <action name="actionWed_ug_daty">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Według godziny</string>
+   </property>
+   <property name="statusTip">
+    <string>Uporządkuj według godziny</string>
+   </property>
+  </action>
+  <action name="actionWed_ug_opisu">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Według opisu</string>
+   </property>
+   <property name="statusTip">
+    <string>Uporządkuj według opisu alfabetycznie</string>
+   </property>
+  </action>
+  <action name="actionWed_ug_statusu">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Według statusu</string>
+   </property>
+   <property name="whatsThis">
+    <string>Uporządkuj według statusu wykonania</string>
+   </property>
+  </action>
+  <action name="actionRosn_co">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Rosnąco</string>
+   </property>
+  </action>
+  <action name="actionMalej_co">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Malejąco</string>
    </property>
   </action>
  </widget>
