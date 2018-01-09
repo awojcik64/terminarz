@@ -82,6 +82,8 @@ private slots:
 
     void on_actionMalej_co_triggered(bool checked);
 
+    void on_actionAplikacja_Weekday_triggered();
+
 private:
     Ui::MainWindow *ui;
     bool sort();

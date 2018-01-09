@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <fstream>
 #include <edit_event.h>
-
+#include "calculateweekday.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->dzien_tygodnia->setText(QDate::currentDate().toString("dddd, d MMMM yyyy"));
     startupListEvents logon_message(logowanie.session_data);
     logon_message.exec();
     statusBar()->showMessage("Dodatkowe opcje dotyczące istniejących wydarzeń dostępne są pod prawym przyciskiem myszy.");
@@ -159,6 +160,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_calendarWidget_clicked(const QDate &date)
 {
     updateTable(date);
+    ui->dzien_tygodnia->setText(date.toString("dddd, d MMMM yyyy"));
 }
 
 
@@ -448,4 +450,10 @@ void MainWindow::on_actionMalej_co_triggered(bool checked)
 {
     ascending=false;
     updateTable(ui->calendarWidget->selectedDate());
+}
+
+void MainWindow::on_actionAplikacja_Weekday_triggered()
+{
+    calculateWeekday calculator;
+    calculator.exec();
 }

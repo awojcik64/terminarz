@@ -28,17 +28,20 @@ SOURCES += \
         mainwindow.cpp \
     startuplistevents.cpp \
     login_form.cpp \
-    edit_event.cpp
+    edit_event.cpp \
+    calculateweekday.cpp
 
 HEADERS += \
         mainwindow.h \
     startuplistevents.h \
     login_form.h \
-    edit_event.h
+    edit_event.h \
+    calculateweekday.h
 
 FORMS += \
         mainwindow.ui \
     startuplistevents.ui \
     login_form.ui \
-    edit_event.ui
+    edit_event.ui \
+    calculateweekday.ui
 CONFIG += c++11
