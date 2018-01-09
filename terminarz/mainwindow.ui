@@ -268,6 +268,9 @@
    <property name="text">
     <string>Według &amp;statusu</string>
    </property>
+   <property name="statusTip">
+    <string>Uporządkuj według statusu</string>
+   </property>
    <property name="whatsThis">
     <string>Uporządkuj według statusu wykonania</string>
    </property>
@@ -279,6 +282,9 @@
    <property name="text">
     <string>&amp;Rosnąco</string>
    </property>
+   <property name="statusTip">
+    <string>Uporządkuj rosnąco.</string>
+   </property>
   </action>
   <action name="actionMalej_co">
    <property name="checkable">
@@ -286,6 +292,9 @@
    </property>
    <property name="text">
     <string>&amp;Malejąco</string>
+   </property>
+   <property name="statusTip">
+    <string>Uporządkuj malejąco.</string>
    </property>
   </action>
   <action name="actionAplikacja_Weekday">
