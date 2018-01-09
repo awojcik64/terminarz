@@ -32,6 +32,10 @@ struct event_log
     QString stan;
 };
 
+enum header_names {GODZ,DESC,STATE};
+enum sort_rules {TIME, DESCRIPTION, STATUS};
+enum sort_order {ASCENDING, DESCENDING};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -85,6 +89,10 @@ private:
     bool writeFile(QFile &archive);
     bool readFile(QFile &archive);
     void addEvent();
+    bool sortMgr(unsigned short int arg_sortBy, bool arg_ascending);
+    unsigned short int sortBy;
+    bool ascending;
+    bool sortComparator(const event_log &arg1, const event_log &arg2);
 };
 
 

@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <fstream>
 #include <edit_event.h>
-enum header_names {GODZ,DESC,STATE};
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->timeEdit->setTime(QTime::currentTime());
     readFile(archive);
     logowanie.exec();
+    sortBy=TIME;
+    ascending=true;
     if(storage.size()>0)
         updateTable(ui->calendarWidget->selectedDate());
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -167,6 +169,42 @@ void MainWindow::swap(event_log &entity1, event_log &entity2)
     entity1=entity2;
     entity2=tmp;
 }
+bool MainWindow::sortComparator(const event_log &arg1,const  event_log &arg2)
+{
+    switch(sortBy)
+    {
+    case TIME:
+    {
+        if(ascending)
+        {
+            return (arg1.time<arg2.time);
+        }else return (arg1.time>arg2.time);
+    }break;
+    case DESCRIPTION:
+    {
+        if(ascending)
+        {
+            return (arg1.description<arg2.description);
+        }else return (arg1.description>arg2.description);
+    }break;
+    case STATUS:
+    {
+        if(ascending)
+        {
+            return (arg1.stan<arg2.stan);
+        }else return (arg1.stan>arg2.stan);
+    }break;
+    default:
+    {
+        QMessageBox critical_error;
+        critical_error.setIcon(QMessageBox::Critical);
+        critical_error.setText("Błąd sortowania");
+        critical_error.setInformativeText("Sortowanie jest uszkodzone.");
+        critical_error.exec();
+        exit(-1);
+    }
+    }
+}
 bool MainWindow::sort()
 {
     int i=0,j=0,k=0;
@@ -174,7 +212,8 @@ bool MainWindow::sort()
     {
         k=i;
         for(j=i+1; j<storage.size(); j++)
-            if(storage[j].time<storage[k].time)
+            //if(storage[j].time<storage[k].time)
+            if(sortComparator(storage[j], storage[k]))
             {
                 k=j;
             }
@@ -182,6 +221,8 @@ bool MainWindow::sort()
     }
     return 1;
 }
+
+
 
 void MainWindow::addEvent()
 {
@@ -380,26 +421,31 @@ void MainWindow::on_actionO_programie_triggered()
 
 void MainWindow::on_actionWed_ug_statusu_triggered(bool checked)
 {
-
+    sortBy=STATUS;
+    updateTable(ui->calendarWidget->selectedDate());
 }
 
 void MainWindow::on_actionWed_ug_opisu_triggered(bool checked)
 {
-
+    sortBy=DESCRIPTION;
+    updateTable(ui->calendarWidget->selectedDate());
 }
 
 
 void MainWindow::on_actionWed_ug_godziny_triggered(bool checked)
 {
-
+    sortBy=TIME;
+    updateTable(ui->calendarWidget->selectedDate());
 }
 
 void MainWindow::on_actionRosn_co_triggered(bool checked)
 {
-
+    ascending=true;
+    updateTable(ui->calendarWidget->selectedDate());
 }
 
 void MainWindow::on_actionMalej_co_triggered(bool checked)
 {
-
+    ascending=false;
+    updateTable(ui->calendarWidget->selectedDate());
 }
