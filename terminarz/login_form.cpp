@@ -9,14 +9,19 @@ login_form::login_form(QWidget *parent) :
     setWindowTitle("Logowanie do terminarza");
     odczyt_uzytkownikow(user_file);
     qDebug()<<"[login_form] Wczytano uzytkownikow"<<endl;
-    ui->EditPassword->setEchoMode(QLineEdit::Password);
+    ui->EditPassword->setEchoMode(QLineEdit::Password); //!< Ustawianie pola tak, by zakrywało hasło.
 }
 
 login_form::~login_form()
 {
     delete ui;
 }
-
+/*!
+ * \brief operator >>
+ *
+ * Przeładowany operator ułatwiający operację na plikach.
+ * Wpisuje dane z buffera i je zwraca, jako wynik.
+ */
 QDataStream &operator>>(QDataStream &in, UserData &buffer)
 {
     in>>buffer.login>>buffer.password;
@@ -32,10 +37,10 @@ QString login_form::zaloguj()
     bool czy_istnieje_user=false;
     for(int i=0; i<users.size(); i++)
     {
-        if(login==users[i].login)
+        if(login==users[i].login) //!< Sprawdzenie, czy użytkownik istnieje
         {
             czy_istnieje_user=true;
-            if(haslo == users[i].password)
+            if(haslo == users[i].password) //!< Sprawdzanie poprawności hasła
             {
                 session_data=login;
                 qDebug()<<"[login_form] Wpisano: "<<login<<" - wartosc session_data = "<<session_data<<endl;
@@ -43,6 +48,9 @@ QString login_form::zaloguj()
             }
             else
             {
+                /*!
+                 * \brief Komunikat o niewłaściwym haśle.
+                 */
                 QMessageBox wrongpass;
                 wrongpass.setText("Błąd logowania");
                 wrongpass.setInformativeText("Nieprawidłowe hasło.");
@@ -53,6 +61,7 @@ QString login_form::zaloguj()
         }
     }
     if(czy_istnieje_user == false) {
+        /*!< Komunikat informujący o braku istnieniu danego użytkownika */
         QMessageBox bad_user;
         bad_user.setText("Błąd logowania");
         bad_user.setInformativeText("Użytkownik o takiej nazwie nie istnieje!");
@@ -65,8 +74,8 @@ QString login_form::zaloguj()
 
 bool login_form::odczyt_uzytkownikow(QFile &user_file)
 {
-    user_file.setFileName("Users.txt");
-    if(user_file.exists()==false)
+    user_file.setFileName("Users.txt"); //!< Ustawia nazwę pliku
+    if(user_file.exists()==false) //!< Sprawdza istnienie pliku
     {
         user_file.open(QIODevice::Text | QIODevice::WriteOnly | QIODevice::Append);
         user_file.close();
@@ -76,13 +85,16 @@ bool login_form::odczyt_uzytkownikow(QFile &user_file)
 
     if(user_file.open(QIODevice::Text | QIODevice::ReadOnly)==false)
     {
-        QMessageBox error;
+        QMessageBox error; //!< Informacja o niepowodzeniu w otwarciu pliku
         error.setText("Fatal error!");
         error.setInformativeText("Niepowodzenie w otwarciu pliku do odczytu.");
         QApplication::exit(-1);
     }
     else
     {
+        /*!
+         * \brief Pobieranie danych do pliku
+         */
         UserData buffer;
         QDataStream plik(&user_file);
         while(!plik.atEnd())
@@ -97,7 +109,10 @@ bool login_form::odczyt_uzytkownikow(QFile &user_file)
 
     return 0;
 }
-
+/*!
+ * \brief Operator definiujący przypisywanie struktury.
+ *
+ */
 QDataStream &operator<<(QDataStream &in, UserData &buffer)
 {
     in<<buffer.login<<buffer.password;
@@ -106,7 +121,7 @@ QDataStream &operator<<(QDataStream &in, UserData &buffer)
 bool login_form::writeFile(QFile &user_file)
 {
     user_file.setFileName("Users.txt");
-    if(user_file.open(QIODevice::Text | QIODevice::WriteOnly)==false)
+    if(user_file.open(QIODevice::Text | QIODevice::WriteOnly)==false) //!< Sprawdzenie, czy plik udało się otworzyć
     {
         QMessageBox error;
         error.setText("Fatal error!");
@@ -115,6 +130,7 @@ bool login_form::writeFile(QFile &user_file)
     }
     else
     {
+        //! Zapis danych do pliku
         UserData buffer;
         QDataStream plik(&user_file);
         for(int i=0; i<users.size(); i++)
