@@ -68,9 +68,15 @@ private slots:
 
     void editEvent();
 
-    void on_actionRosn_co_toggled(bool arg1);
+    void on_actionWed_ug_statusu_triggered(bool checked);
 
-    void on_actionMalej_co_toggled(bool arg1);
+    void on_actionWed_ug_opisu_triggered(bool checked);
+
+    void on_actionWed_ug_godziny_triggered(bool checked);
+
+    void on_actionRosn_co_triggered(bool checked);
+
+    void on_actionMalej_co_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;

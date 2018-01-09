@@ -178,7 +178,7 @@
     <property name="title">
      <string>Wyświet&amp;lanie</string>
     </property>
-    <addaction name="actionWed_ug_daty"/>
+    <addaction name="actionWed_ug_godziny"/>
     <addaction name="actionWed_ug_opisu"/>
     <addaction name="actionWed_ug_statusu"/>
     <addaction name="separator"/>
@@ -219,7 +219,7 @@
     <string>&amp;O programie</string>
    </property>
   </action>
-  <action name="actionWed_ug_daty">
+  <action name="actionWed_ug_godziny">
    <property name="checkable">
     <bool>true</bool>
    </property>

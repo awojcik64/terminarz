@@ -29,11 +29,11 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->showMessage("Dodatkowe opcje dotyczące istniejących wydarzeń dostępne są pod prawym przyciskiem myszy.");
 
     QActionGroup* sortGroup = new QActionGroup(this);
-    sortGroup->addAction(ui->actionWed_ug_daty);
+    sortGroup->addAction(ui->actionWed_ug_godziny);
     sortGroup->addAction(ui->actionWed_ug_opisu);
     sortGroup->addAction(ui->actionWed_ug_statusu);
     sortGroup->setExclusive(true);
-    ui->actionWed_ug_daty->setChecked(true);
+    ui->actionWed_ug_godziny->setChecked(true);
     QActionGroup* sortOrderGroup = new QActionGroup(this);
     sortOrderGroup->addAction(ui->actionRosn_co);
     sortOrderGroup->addAction(ui->actionMalej_co);
@@ -378,14 +378,28 @@ void MainWindow::on_actionO_programie_triggered()
     info.exec();
 }
 
-void MainWindow::on_actionRosn_co_toggled(bool arg1)
+void MainWindow::on_actionWed_ug_statusu_triggered(bool checked)
 {
-
 
 }
 
-void MainWindow::on_actionMalej_co_toggled(bool arg1)
+void MainWindow::on_actionWed_ug_opisu_triggered(bool checked)
 {
 
+}
+
+
+void MainWindow::on_actionWed_ug_godziny_triggered(bool checked)
+{
+
+}
+
+void MainWindow::on_actionRosn_co_triggered(bool checked)
+{
+
+}
+
+void MainWindow::on_actionMalej_co_triggered(bool checked)
+{
 
 }
