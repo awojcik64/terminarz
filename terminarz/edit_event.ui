@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -47,7 +47,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QTimeEdit" name="edit_event_time"/>
+     <widget class="QTimeEdit" name="edit_event_time">
+      <property name="displayFormat">
+       <string>HH:mm:ss</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLineEdit" name="editEvent_description">

@@ -86,6 +86,9 @@
        <height>32</height>
       </rect>
      </property>
+     <property name="displayFormat">
+      <string>HH:mm:ss</string>
+     </property>
      <property name="calendarPopup">
       <bool>false</bool>
      </property>
@@ -299,7 +302,7 @@
   </action>
   <action name="actionAplikacja_Weekday">
    <property name="text">
-    <string>Aplikacja Weekday</string>
+    <string>&amp;Aplikacja Weekday</string>
    </property>
    <property name="toolTip">
     <string>Aplikacja do obliczania dnia tygodnia na podstawie podanej daty</string>
