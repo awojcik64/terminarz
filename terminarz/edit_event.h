@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <QDialog>
-#include <unistd.h>
 #include <fstream>
 #include <QtGui>
 #include <QtWidgets>

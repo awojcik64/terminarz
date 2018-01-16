@@ -4,7 +4,7 @@
 /*!
  * \brief Typ numerujący nagłówki kolumn
  */
-enum header_names_startup {DATE,GODZ,DESC,STAN};
+enum header_names_startup {ROW_DATE,GODZ,DESC,STAN};
 
 startupListEvents::startupListEvents(QString session_username, QWidget *parent) :
     QDialog(parent),
@@ -20,7 +20,7 @@ startupListEvents::startupListEvents(QString session_username, QWidget *parent) 
     ui->tableWidget->setHorizontalHeaderLabels(headers); //!< Wczytanie listy z nagłówkami kolumn tabeli
     ui->tableWidget->setColumnWidth(GODZ, 60); //!<Rozmiar kolumny godziny
     ui->tableWidget->setColumnWidth(DESC,300); //!<Rozmiar kolumny na opis wydarzenia
-    ui->tableWidget->setColumnWidth(DATE, 200); //!< Rozmiar kolumny daty
+    ui->tableWidget->setColumnWidth(ROW_DATE, 200); //!< Rozmiar kolumny daty
     ui->tableWidget->setColumnWidth(STAN, 110);
     readFile(archive); //!< Odczyt wydarzeń z pliku
     session_data=session_username; //!< Ustalenie nazwy bieżącego użytkownika
@@ -85,7 +85,7 @@ void startupListEvents::fetchTable(const QDate &date)
         {
             ui->tableWidget->setRowCount(++rowsCount);
             qDebug()<<"[startuplistevents] Wartość rowsCount"<<rowsCount<<endl;
-            ui->tableWidget->setItem(rowsCount-1,DATE,new QTableWidgetItem(storage[i].date.toString("dddd, d MMMM yyyy")));
+            ui->tableWidget->setItem(rowsCount-1,ROW_DATE,new QTableWidgetItem(storage[i].date.toString("dddd, d MMMM yyyy")));
             ui->tableWidget->setItem(rowsCount-1,GODZ,new QTableWidgetItem(storage[i].time.toString()));
             ui->tableWidget->setItem(rowsCount-1,DESC,new QTableWidgetItem(storage[i].description));
             ui->tableWidget->setItem(rowsCount-1,STAN,new QTableWidgetItem(storage[i].stan));
@@ -98,7 +98,7 @@ void startupListEvents::fetchTable(const QDate &date)
         if(storage[i].date==date.addDays(1))
         {
             ui->tableWidget->setRowCount(++rowsCount);
-            ui->tableWidget->setItem(rowsCount-1,DATE,new QTableWidgetItem(storage[i].date.toString("dddd, d MMMM yyyy")));
+            ui->tableWidget->setItem(rowsCount-1,ROW_DATE,new QTableWidgetItem(storage[i].date.toString("dddd, d MMMM yyyy")));
             ui->tableWidget->setItem(rowsCount-1,GODZ,new QTableWidgetItem(storage[i].time.toString()));
             ui->tableWidget->setItem(rowsCount-1,DESC,new QTableWidgetItem(storage[i].description));
             ui->tableWidget->setItem(rowsCount-1,STAN,new QTableWidgetItem(storage[i].stan));

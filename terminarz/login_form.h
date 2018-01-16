@@ -2,7 +2,6 @@
 #define LOGIN_FORM_H
 #include <iostream>
 #include <QDialog>
-#include <unistd.h>
 #include <fstream>
 #include <QtGui>
 #include <QtWidgets>
